@@ -1,27 +1,77 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-	<meta charset="UTF-8">
-	<title>Chart.js+Vue.js+Axios</title>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-</head>
-<body>
-  <div style="width:600px">
-    <canvas id="myChart"></canvas>
+<template>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png">
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <Chart :chartData="chartItems" :options="chartOptions"/>
   </div>
+  
+</template>
+
 <script>
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: ['2019年1月', '2019年2月', '2019年3月', '2019年4月'],
+// import HelloWorld from './components/HelloWorld.vue'
+// import Chart from './components/Chart.vue'
+import axios from 'packs/axios'
+import Chart from './chartbox'
+
+export default {
+  name: 'App',
+  components: {
+    // HelloWorld,
+    Chart
+  },
+  data() {
+    return {
+      chartItems: {
+          labels: ["1:41", "3:21"],
           datasets: [{
-              label: '四半期の売上数の遷移',
-              data: [120, 190, 34, 58]
+            lineTension: 0,
+            label: "視聴維持率",
+            data: [95, 70, 80, 65, 69, 80, 100, 100, 72, 81, 45, 70,75,55],
+            backgroundColor: 'lightblue'
+          }]
+      },
+      // 後程オプションを記述
+      chartOptions: {
+        maintainAspectRatio: false,
+        tooltips: {
+            // mode: 'nearest'
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            // X軸グリッド非表示
+            gridLines: {
+              display:false
+            },
+            ticks: {
+                maxTicksLimit: 100
             }
-          ]
-      }
-  });
+          }],
+          // Y軸
+          yAxes: [{
+            display: true,
+            position: 'right',
+            ticks: {
+              // 0から始まる
+              beginAtZero: true,
+              // 最大5目盛
+              maxTicksLimit: 5,
+            },
+          }]
+        },
+      },
+    }
+  }
+}
 </script>
-</body>
-</html>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
